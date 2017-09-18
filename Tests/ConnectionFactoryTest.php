@@ -41,7 +41,7 @@ class ConnectionFactoryTest extends TestCase
         $config       = null;
         $eventManager = null;
         $mappingTypes = [0];
-        $exception    = new DriverException('', $this->createMock('\Doctrine\DBAL\Driver\DriverException'));
+        $exception    = new DriverException('', $this->getMockBuilder('Doctrine\DBAL\Driver\DriverException')->getMock());
 
         // put the mock into the fake driver
         FakeDriver::$exception = $exception;

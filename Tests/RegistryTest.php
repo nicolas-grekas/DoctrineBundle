@@ -20,7 +20,7 @@ class RegistryTest extends TestCase
 {
     public function testGetDefaultConnectionName()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array(), array(), 'default', 'default');
 
         $this->assertEquals('default', $registry->getDefaultConnectionName());
@@ -28,7 +28,7 @@ class RegistryTest extends TestCase
 
     public function testGetDefaultEntityManagerName()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array(), array(), 'default', 'default');
 
         $this->assertEquals('default', $registry->getDefaultManagerName());
@@ -36,8 +36,8 @@ class RegistryTest extends TestCase
 
     public function testGetDefaultConnection()
     {
-        $conn = $this->createMock('Doctrine\DBAL\Connection', array(), array(), '', false);
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $conn = $this->getMockBuilder('Doctrine\DBAL\Connection')->disableOriginalConstructor()->getMock();
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->expects($this->once())
                   ->method('get')
                   ->with($this->equalTo('doctrine.dbal.default_connection'))
@@ -50,8 +50,8 @@ class RegistryTest extends TestCase
 
     public function testGetConnection()
     {
-        $conn = $this->createMock('Doctrine\DBAL\Connection', array(), array(), '', false);
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $conn = $this->getMockBuilder('Doctrine\DBAL\Connection')->disableOriginalConstructor()->getMock();
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->expects($this->once())
                   ->method('get')
                   ->with($this->equalTo('doctrine.dbal.default_connection'))
@@ -64,7 +64,7 @@ class RegistryTest extends TestCase
 
     public function testGetUnknownConnection()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array(), array(), 'default', 'default');
 
         $this->expectException(\InvalidArgumentException::class);
@@ -74,7 +74,7 @@ class RegistryTest extends TestCase
 
     public function testGetConnectionNames()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array('default' => 'doctrine.dbal.default_connection'), array(), 'default', 'default');
 
         $this->assertEquals(array('default' => 'doctrine.dbal.default_connection'), $registry->getConnectionNames());
@@ -83,7 +83,7 @@ class RegistryTest extends TestCase
     public function testGetDefaultEntityManager()
     {
         $em = new \stdClass();
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->expects($this->once())
                   ->method('get')
                   ->with($this->equalTo('doctrine.orm.default_entity_manager'))
@@ -97,7 +97,7 @@ class RegistryTest extends TestCase
     public function testGetEntityManager()
     {
         $em = new \stdClass();
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $container->expects($this->once())
                   ->method('get')
                   ->with($this->equalTo('doctrine.orm.default_entity_manager'))
@@ -110,7 +110,7 @@ class RegistryTest extends TestCase
 
     public function testGetUnknownEntityManager()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array(), array(), 'default', 'default');
 
         $this->expectException(\InvalidArgumentException::class);
@@ -120,7 +120,7 @@ class RegistryTest extends TestCase
 
     public function testResetUnknownEntityManager()
     {
-        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')->getMock();
         $registry = new Registry($container, array(), array(), 'default', 'default');
 
         $this->expectException(\InvalidArgumentException::class);
