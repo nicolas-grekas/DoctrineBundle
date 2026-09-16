@@ -6,13 +6,21 @@ namespace Doctrine\Bundle\DoctrineBundle\CacheWarmer;
 
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
-use Symfony\Bundle\FrameworkBundle\CacheWarmer\AbstractPhpFileCacheWarmer;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\CacheWarmer\AbstractPhpFileCacheWarmer;
 
+use function class_alias;
+use function class_exists;
 use function is_file;
 
+// The base cache warmer moved from FrameworkBundle to the Cache component in
+// Symfony 8.2; fall back to BaseCacheWarmer, which extends the legacy one.
+if (class_exists(AbstractPhpFileCacheWarmer::class)) {
+    class_alias(AbstractPhpFileCacheWarmer::class, BaseCacheWarmer::class);
+}
+
 /** @internal */
-final class DoctrineMetadataCacheWarmer extends AbstractPhpFileCacheWarmer
+final class DoctrineMetadataCacheWarmer extends BaseCacheWarmer
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
